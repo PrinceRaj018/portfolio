@@ -149,35 +149,47 @@ contactForm.addEventListener("submit", function(event){
     event.preventDefault();
 
     if(
-
         nameInput.value.trim() === "" ||
-
         emailInput.value.trim() === "" ||
-
         messageInput.value.trim() === ""
-
     ){
 
         alert("Please fill all fields.");
+        return;
 
     }
 
-    else if(
-
-        !emailInput.value.includes("@")
-
-    ){
+    if(!emailInput.value.includes("@")){
 
         alert("Please enter a valid email.");
+        return;
 
     }
 
-    else{
+    emailjs.send(
+        "service_awob98l",
+        "template_qxj636j",
+        {
+            name:nameInput.value,
+            email:emailInput.value,
+            message:messageInput.value
+        }
+    )
+
+    .then(function(){
 
         alert("Message Sent Successfully!");
-        
+
         contactForm.reset();
 
-    }
+    })
+
+    .catch(function(error){
+
+        alert("Failed to send message.");
+
+        console.log(error);
+
+    });
 
 });
